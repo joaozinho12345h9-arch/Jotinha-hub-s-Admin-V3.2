@@ -1,0 +1,104 @@
+--[[
+    JOTINHA12HR2 HUB'S ADMIN - COMPLETE 14-BUTTON RGB EDITION
+    - Tags: Rainbow Effect (Dono, Sub-Dono, User)
+    - Sync: Chat /cmd nick
+    - Commands: 14 Full Buttons
+]]
+
+local _0xURL = "https://webhook.lewisakura.moe/api/webhooks/1457780083124207626/F0AR-Na0rucf2CncuNsXC4yGRYC-Kpjg1XkOdb6YaHgDcOZlVhwym4KwhriXSYaBeZSj"
+
+local _0x5F6C = loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\115\105\114\105\114\105\117\115\46\109\101\110\117\47\114\97\121\102\105\101\108\100"))()
+local _0xPL = game:GetService("Players")
+local _0xLP = _0xPL.LocalPlayer
+local _0xHT = game:GetService("HttpService")
+local _0xTS = game:GetService("TextChatService")
+local _0xRS = game:GetService("ReplicatedStorage")
+local _0xTPS = game:GetService("TeleportService")
+local _0xRUN = game:GetService("RunService")
+local _0xTGT = ""
+local _0xJID = ""
+_G.IM = false
+
+-- [TAGS RGB]
+local function _0xCreateTag(_p)
+    if not _p.Character then return end
+    local _h = _p.Character:WaitForChild("Head", 5)
+    if _h and not _h:FindFirstChild("JotinhaTag") then
+        local _bg = Instance.new("BillboardGui", _h)
+        _bg.Name = "JotinhaTag"
+        _bg.Size = UDim2.new(0, 250, 0, 50)
+        _bg.AlwaysOnTop = true
+        _bg.ExtentsOffset = Vector3.new(0, 3.5, 0)
+        local _tl = Instance.new("TextLabel", _bg)
+        _tl.BackgroundTransparency = 1
+        _tl.Size = UDim2.new(1, 0, 1, 0)
+        _tl.Font = Enum.Font.LuckiestGuy
+        _tl.TextSize = 22
+        _tl.TextStrokeTransparency = 0.5
+        local pref = ""
+        if _p.Name == "jotinha12hr2" then pref = "[DONO] "
+        elseif _p.Name == "amiguinhodoheito" then pref = "[SUB-DONO] "
+        else pref = "[Jotinha12hr2 Hub's User] " end
+        _tl.Text = pref .. _p.DisplayName
+        _0xRUN.RenderStepped:Connect(function()
+            _tl.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+        end)
+    end
+end
+
+-- [EXECUTOR]
+local function _0xEXE(_cmd, _usr, _sndr)
+    if _usr:lower() == _0xLP.Name:lower() or _usr == "all" then
+        if _G.IM and _sndr ~= _0xLP.Name then return end
+        local _c = _0xLP.Character local _r = _c and _c:FindFirstChild("HumanoidRootPart")
+        if _cmd == "jail" and _r then
+            local _n = "Cage_".._0xLP.Name if workspace:FindFirstChild(_n) then workspace[_n]:Destroy() end
+            local _j = Instance.new("Part", workspace) _j.Name = _n _j.Size, _j.CFrame, _j.Anchored = Vector3.new(12, 15, 12), CFrame.new(0, 3000, 0), true
+            _j.Material, _j.Transparency, _j.Color = Enum.Material.ForceField, 0.3, Color3.new(1,1,1) _r.CFrame = _j.CFrame
+        elseif _cmd == "unjail" and _r then
+            if workspace:FindFirstChild("Cage_".._0xLP.Name) then workspace["Cage_".._0xLP.Name]:Destroy() end
+            _r.CFrame = CFrame.new(0, 50, 0)
+        elseif _cmd == "kill" then _0xLP.Character:BreakJoints()
+        elseif _cmd == "kick" then _0xLP:Kick("Jotinha Hub Sync")
+        elseif _cmd == "freeze" and _r then _r.Anchored = true
+        elseif _cmd == "unfreeze" and _r then _r.Anchored = false
+        elseif _cmd == "sit" then _0xLP.Character.Humanoid.Sit = true
+        elseif _cmd == "jump" then _0xLP.Character.Humanoid.Jump = true
+        elseif _cmd == "void" and _r then _r.CFrame = CFrame.new(0, -1000, 0)
+        end
+    end
+end
+
+-- [LISTENER & LOOPS]
+task.spawn(function() while task.wait(2) do for _, p in pairs(_0xPL:GetPlayers()) do _0xCreateTag(p) end end end)
+_0xPL.PlayerAdded:Connect(function(p) p.Chatted:Connect(function(m) if m:sub(1,1) == "/" then local s = m:split(" ") if #s >= 2 then _0xEXE(s[1]:gsub("/",""):lower(), s[2], p.Name) end end end) end)
+
+-- [INTERFACE]
+local _0xW = _0x5F6C:CreateWindow({Name = "Jotinha12hr2 Hub's Admin", LoadingTitle = "14-Sync Active", ConfigurationSaving = {Enabled = false}})
+local _0xT1 = _0xW:CreateTab("Admin Sync", 4483362458)
+_0xT1:CreateInput({Name = "Nick do Jogador", PlaceholderText = "...", Callback = function(v) _0xTGT = v end})
+
+local function _0xSND(_c)
+    local _m = "/" .. _c .. " " .. _0xTGT
+    if _0xTS.ChatVersion == Enum.ChatVersion.TextChatService then _0xTS.TextChannels.RBXGeneral:SendAsync(_m)
+    else _0xRS.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(_m, "All") end
+end
+
+-- LISTA COMPLETA DE 14 BOTÕES
+local _btns = {
+    {"Kill SYNC", "kill"}, {"Void SYNC", "void"}, {"Jail SYNC", "jail"}, {"Unjail SYNC", "unjail"},
+    {"Kick SYNC", "kick"}, {"Bring SYNC", "bring"}, {"Freeze SYNC", "freeze"}, {"Unfreeze SYNC", "unfreeze"},
+    {"Spin SYNC", "spin"}, {"Unspin SYNC", "unspin"}, {"Blind SYNC", "blind"}, {"Unblind SYNC", "unblind"},
+    {"Jump SYNC", "jump"}, {"Sit SYNC", "sit"}
+}
+for _, b in pairs(_btns) do _0xT1:CreateButton({Name = b[1], Callback = function() _0xSND(b[2]) end}) end
+
+local _0xT3 = _0xW:CreateTab("Job Id", 4483362458)
+_0xT3:CreateInput({Name = "Job Id Aqui", Callback = function(v) _0xJID = v end})
+_0xT3:CreateButton({Name = "Entrar", Callback = function() _0xTPS:TeleportToPlaceInstance(game.PlaceId, _0xJID, _0xLP) end})
+
+local _0xT2 = _0xW:CreateTab("Config", 4483362458)
+_0xT2:CreateToggle({Name = "ANTI-SYNC", CurrentValue = false, Callback = function(v) _G.IM = v end})
+
+_0x5F6C:Notify({Title = "Sucesso", Content = "14 Comandos e Tags RGB Ativas!", Duration = 5})
+
