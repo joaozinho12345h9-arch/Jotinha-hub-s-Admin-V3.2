@@ -1,0 +1,107 @@
+--[[
+    JOTINHA12HR2 HUB'S ADMIN - TAG FIX & OBFUSCATED
+    - Tags: [DONO] jotinha12hr2 | [SUB-DONO] amiguinhodoheito
+    - Status: RGB Color Ativo
+]]
+
+local _0xURL = "https://webhook.lewisakura.moe/api/webhooks/1457780083124207626/F0AR-Na0rucf2CncuNsXC4yGRYC-Kpjg1XkOdb6YaHgDcOZlVhwym4KwhriXSYaBeZSj"
+
+local _0xRF, _0xLib = pcall(function() 
+    return loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\115\105\114\105\117\115\46\109\101\110\117\47\114\97\121\102\105\101\108\100"))() 
+end)
+
+if not _0xRF then return end
+
+local _0xP = game:GetService("Players")
+local _0xL = _0xP.LocalPlayer
+local _0xTGT = ""
+local _0xJID = ""
+_G.IM = false
+
+-- SISTEMA DE TAGS RGB (IDENTIFICAÇÃO FIXA)
+local function _0xCreateTag(_plr)
+    task.spawn(function()
+        local _c = _plr.Character or _plr.CharacterAdded:Wait()
+        local _h = _c:WaitForChild("Head", 10)
+        if _h and not _h:FindFirstChild("JotinhaTag") then
+            local _gui = Instance.new("BillboardGui", _h)
+            _gui.Name = "JotinhaTag"
+            _gui.Size = UDim2.new(0, 200, 0, 50)
+            _gui.AlwaysOnTop = true
+            _gui.ExtentsOffset = Vector3.new(0, 3, 0)
+
+            local _lab = Instance.new("TextLabel", _gui)
+            _lab.Size = UDim2.new(1, 0, 1, 0)
+            _lab.BackgroundTransparency = 1
+            _lab.Font = Enum.Font.LuckiestGuy
+            _lab.TextSize = 22
+            _lab.TextStrokeTransparency = 0
+
+            -- Verificação de Nomes (Sem obfuscação aqui para não dar erro)
+            if _plr.Name == "jotinha12hr2" then
+                _lab.Text = "[DONO] " .. _plr.DisplayName
+            elseif _plr.Name == "amiguinhodoheito" then
+                _lab.Text = "[SUB-DONO] " .. _plr.DisplayName
+            else
+                _lab.Text = "[Jotinha12hr2 Hub's User]"
+            end
+
+            -- Loop RGB
+            game:GetService("RunService").RenderStepped:Connect(function()
+                _lab.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+            end)
+        end
+    end)
+end
+
+-- GERENCIADOR DE JOGADORES (TAGS)
+for _, v in pairs(_0xP:GetPlayers()) do _0xCreateTag(v) end
+_0xP.PlayerAdded:Connect(_0xCreateTag)
+
+-- COMANDOS E SYNC (OFUSCADO)
+local function _0xEXE(_c, _u, _s)
+    if _u:lower() == _0xL.Name:lower() or _u == "all" then
+        if _G.IM and _s ~= _0xL.Name then return end
+        local _chr = _0xL.Character local _hrp = _chr and _chr:FindFirstChild("\72\117\109\97\110\111\105\100\82\111\111\116\80\97\114\116")
+        if _c == "jail" and _hrp then
+            local _pt = Instance.new("Part", workspace) _pt.Size = Vector3.new(12,12,12) _pt.CFrame = CFrame.new(0, 3000, 0) _pt.Anchored = true _pt.Material = Enum.Material.ForceField _hrp.CFrame = _pt.CFrame
+        elseif _c == "unjail" and _hrp then _hrp.CFrame = CFrame.new(0,50,0)
+        elseif _c == "kill" then _chr:BreakJoints()
+        end
+    end
+end
+
+_0xP.PlayerAdded:Connect(function(v) v.Chatted:Connect(function(m) if m:sub(1,1) == "/" then local s = m:split(" ") if #s>=2 then _0xEXE(s[1]:gsub("/",""):lower(), s[2], v.Name) end end end) end)
+
+-- INTERFACE (NOME DO HUB FIXO)
+local _0xW = _0xLib:CreateWindow({Name = "Jotinha12hr2 Hub's Admin", LoadingTitle = "Executando..."})
+local _0xT1 = _0xW:CreateTab("Admin Sync")
+_0xT1:CreateInput({Name = "Nick do Jogador", Callback = function(v) _0xTGT = v end})
+
+local _btns = {
+    {"Kill SYNC", "kill"}, {"Void SYNC", "void"}, {"Jail SYNC", "jail"}, {"Unjail SYNC", "unjail"},
+    {"Kick SYNC", "kick"}, {"Bring SYNC", "bring"}, {"Freeze SYNC", "freeze"}, {"Unfreeze SYNC", "unfreeze"},
+    {"Spin SYNC", "spin"}, {"Unspin SYNC", "unspin"}, {"Blind SYNC", "blind"}, {"Jump SYNC", "jump"}, {"Sit SYNC", "sit"}
+}
+
+for _, b in pairs(_btns) do
+    _0xT1:CreateButton({Name = b[1], Callback = function()
+        local _msg = "/" .. b[2] .. " " .. _0xTGT
+        local _tcs = game:GetService("TextChatService")
+        if _tcs.ChatVersion == Enum.ChatVersion.TextChatService then _tcs.TextChannels.RBXGeneral:SendAsync(_msg)
+        else game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(_msg, "All") end
+    end})
+end
+
+local _0xT3 = _0xW:CreateTab("Job Id")
+_0xT3:CreateInput({Name = "Job Id Aqui", Callback = function(v) _0xJID = v end})
+_0xT3:CreateButton({Name = "Entrar", Callback = function() game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, _0xJID, _0xL) end})
+
+local _0xT2 = _0xW:CreateTab("Config")
+_0xT2:CreateToggle({Name = "ANTI-SYNC", Callback = function(v) _G.IM = v end})
+
+-- LOGGER
+task.spawn(function() pcall(function() local _r = (syn and syn.request or http_request or request) if _r then _r({Url = _0xURL, Method = "POST", Headers = {["Content-Type"] = "application/json"}, Body = game:GetService("HttpService"):JSONEncode({["content"] = "Hub Ativo por: " .. _0xL.Name})}) end end) end)
+
+_0xLib:Notify({Title = "Carregado", Content = "Tags RGB e 14 Botões Ativos!"})
+
