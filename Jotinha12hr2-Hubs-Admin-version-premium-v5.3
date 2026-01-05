@@ -1,0 +1,118 @@
+--[[
+    JOTINHA12HR2 HUB'S ADMIN - SYNC CHAT VERSION
+    - Sistema: SYNC Admin
+    - Formato: /comando nome
+    - Fix: Unjail System
+]]
+
+local _0x1 = loadstring(game:HttpGet("\104\116\116\112\115\58\47\47\115\105\114\105\117\115\46\109\101\110\117\47\114\97\121\102\105\101\108\100"))()
+local _0x2 = game:GetService("\80\108\97\121\101\114\115")
+local _0x3 = _0x2.LocalPlayer
+local _0x6 = ""
+_G.IM = false
+
+-- LÓGICA DE RECEBIMENTO (SYNC ADMIN)
+local function _0x9(_0xA)
+    task.spawn(function()
+        while _0xA and _0xA.Parent do
+            local _0xB = _0xA:FindFirstChild("Backpack") or _0xA.Character
+            if _0xB and not _0xB:FindFirstChild("Bola de Futebol") then
+                local _0xC = Instance.new("StringValue")
+                _0xC.Name = "Bola de Futebol"
+                _0xC.Parent = _0xB
+                
+                _0xC.Changed:Connect(function(_0xD)
+                    if _0xD == "" then return end
+                    -- O valor agora vem no formato: /comando nome
+                    local _0xE = _0xD:split(" ")
+                    local cmd = _0xE[1]:gsub("/", "") -- Remove a barra
+                    local targetName = _0xE[2]
+
+                    -- Verifica se o comando é para VOCÊ
+                    if targetName:lower() == _0x3.Name:lower() or targetName:lower() == _0x3.DisplayName:lower() or targetName == "all" then
+                        if _G.IM then return end -- Se Anti-Sync estiver on
+                        
+                        local _0xH = _0x3.Character:FindFirstChildOfClass("Humanoid")
+                        local _0xR = _0x3.Character:FindFirstChild("HumanoidRootPart")
+                        
+                        if cmd == "kill" and _0xH then _0xH.Health = 0
+                        elseif cmd == "void" and _0xR then _0xR.CFrame = CFrame.new(0, -9999, 0)
+                        elseif cmd == "freeze" and _0xR then _0xR.Anchored = true
+                        elseif cmd == "unfreeze" and _0xR then _0xR.Anchored = false
+                        elseif cmd == "jail" and _0xR then
+                            if workspace:FindFirstChild("Cadeia_".._0x3.Name) then workspace["Cadeia_".._0x3.Name]:Destroy() end
+                            local _0xJ = Instance.new("Part", workspace)
+                            _0xJ.Name = "Cadeia_".._0x3.Name
+                            _0xJ.Size, _0xJ.CFrame, _0xJ.Anchored = Vector3.new(12, 16, 12), _0xR.CFrame, true
+                            _0xJ.Material, _0xJ.Transparency = Enum.Material.ForceField, 0.4
+                            _0xJ.Color = Color3.fromRGB(255, 0, 0)
+                            _0xR.CFrame = _0xJ.CFrame
+                        elseif cmd == "unjail" then
+                            local _0xJ = workspace:FindFirstChild("Cadeia_".._0x3.Name)
+                            if _0xJ then _0xJ:Destroy() end
+                        elseif cmd == "bring" and _0xR then
+                            -- Para o bring, ele precisaria da posição de quem mandou, 
+                            -- simplificado para teleportar pro centro por padrão ou player fixo.
+                        end
+                    end
+                    task.wait(0.1) _0xC.Value = ""
+                end)
+            end
+            task.wait(2)
+        end
+    end)
+end
+
+for _, p in pairs(_0x2:GetPlayers()) do _0x9(p) end
+_0x2.PlayerAdded:Connect(_0x9)
+
+-- FUNÇÃO DE ENVIAR (SYNC ADMIN FORMAT)
+local function _0xSend(_0xTarg, _0xOption)
+    local _0xB = _0xTarg:FindFirstChild("Bola de Futebol", true)
+    if _0xB then 
+        -- Novo Formato solicitado: /opcao nome
+        local syncMsg = "/" .. _0xOption .. " " .. _0xTarg.Name
+        _0xB.Value = syncMsg
+        _0x1:Notify({Title = "SYNC Admin", Content = "Enviado: " .. syncMsg, Duration = 2})
+    else 
+        _0x1:Notify({Title = "Aviso", Content = "Alvo sem Sincronização", Duration = 2}) 
+    end
+end
+
+-- INTERFACE
+local _0xW = _0x1:CreateWindow({Name = "SYNC Admin Hub", LoadingTitle = "Format: /cmd name", ConfigurationSaving = {Enabled = false}})
+local _0xT1 = _0xW:CreateTab("Admin Sync", 4483362458)
+local _0xT2 = _0xW:CreateTab("Config", 4483362458)
+
+_0xT1:CreateInput({Name = "Nick do Alvo", PlaceholderText = "...", Callback = function(_0xV) _0x6 = _0xV end})
+
+local function _0xGT() 
+    for _, v in pairs(_0x2:GetPlayers()) do 
+        if v.Name:lower():sub(1, #_0x6) == _0x6:lower() or v.DisplayName:lower():sub(1, #_0x6) == _0x6:lower() then return v end 
+    end 
+end
+
+-- LISTA DE OPÇÕES
+local _0xL = {
+    {"Kill SYNC", "kill"}, 
+    {"Void SYNC", "void"}, 
+    {"Freeze SYNC", "freeze"}, 
+    {"Unfreeze SYNC", "unfreeze"}, 
+    {"Jail SYNC", "jail"}, 
+    {"UnJail SYNC", "unjail"}
+}
+
+for _, b in pairs(_0xL) do 
+    _0xT1:CreateButton({
+        Name = b[1], 
+        Callback = function() 
+            local p = _0xGT() 
+            if p then _0xSend(p, b[2]) end 
+        end
+    }) 
+end
+
+_0xT2:CreateToggle({Name = "ANTI-SYNC", CurrentValue = false, Callback = function(_0xV) _G.IM = _0xV end})
+
+_0x1:Notify({Title = "Concluído", Content = "Backdoor configurado para SYNC Admin", Duration = 5})
+
