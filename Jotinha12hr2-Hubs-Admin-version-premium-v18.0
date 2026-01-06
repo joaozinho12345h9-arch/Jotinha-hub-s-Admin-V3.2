@@ -1,0 +1,131 @@
+--[[ 
+    NOME: Jotinha12hr2 Hub's Admin (V18)
+    BOTAO: JH (RGB)
+    STATUS: SYNC ATIVO / DIVINE INTERFACE
+]]
+
+repeat task.wait() until game:IsLoaded()
+
+local _0xP = game:GetService("Players")
+local _0xL = _0xP.LocalPlayer
+local _0xR = game:GetService("RunService")
+
+-- [ LIMPEZA ]
+local _0xC = game:GetService("CoreGui")
+if _0xC:FindFirstChild("JotinhaAdminV18") then _0xC.JotinhaAdminV18:Destroy() end
+
+local _0xG = Instance.new("ScreenGui", _0xC)
+_0xG.Name = "JotinhaAdminV18"
+_0xG.ResetOnSpawn = false
+
+-- [ BOTAO JH COLORIDO ]
+local _0xBT = Instance.new("TextButton", _0xG)
+_0xBT.Size = UDim2.new(0, 50, 0, 50)
+_0xBT.Position = UDim2.new(0, 15, 0.5, -25)
+_0xBT.BackgroundColor3 = Color3.fromRGB(15, 15, 15)
+_0xBT.Text = "JH"
+_0xBT.TextColor3 = Color3.new(1, 1, 1)
+_0xBT.Font = Enum.Font.LuckiestGuy
+_0xBT.TextSize = 22
+Instance.new("UICorner", _0xBT).CornerRadius = UDim.new(1, 0)
+local _0xBST = Instance.new("UIStroke", _0xBT)
+_0xBST.Thickness = 3
+
+_0xR.RenderStepped:Connect(function()
+    local c = Color3.fromHSV(tick() % 5 / 5, 0.8, 1)
+    _0xBST.Color = c
+    _0xBT.TextColor3 = c
+end)
+
+-- [ JANELA PRINCIPAL ]
+local _0xMF = Instance.new("Frame", _0xG)
+_0xMF.Size = UDim2.new(0, 300, 0, 380)
+_0xMF.Position = UDim2.new(0.5, -150, 0.5, -190)
+_0xMF.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
+_0xMF.Visible = true
+_0xMF.Active = true
+_0xMF.Draggable = true
+Instance.new("UICorner", _0xMF).CornerRadius = UDim.new(0, 10)
+local _0xMST = Instance.new("UIStroke", _0xMF)
+_0xMST.Color = Color3.fromRGB(255, 215, 0)
+_0xMST.Thickness = 2
+
+_0xBT.MouseButton1Click:Connect(function() _0xMF.Visible = not _0xMF.Visible end)
+
+-- TÍTULO ATUALIZADO
+local _0xTL = Instance.new("TextLabel", _0xMF)
+_0xTL.Size = UDim2.new(1, 0, 0, 45)
+_0xTL.Text = "Jotinha12hr2 Hub's Admin"
+_0xTL.TextColor3 = Color3.fromRGB(255, 215, 0)
+_0xTL.BackgroundTransparency = 1
+_0xTL.Font = Enum.Font.GothamBold
+_0xTL.TextSize = 17
+
+local _0xS = Instance.new("ScrollingFrame", _0xMF)
+_0xS.Size = UDim2.new(1, -10, 1, -55)
+_0xS.Position = UDim2.new(0, 5, 0, 50)
+_0xS.BackgroundTransparency = 1
+_0xS.CanvasSize = UDim2.new(0, 0, 2.8, 0)
+_0xS.ScrollBarThickness = 0
+local _0xLS = Instance.new("UIListLayout", _0xS)
+_0xLS.Padding = UDim.new(0, 8)
+_0xLS.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+-- INPUT NICK
+local _0xNI = Instance.new("TextBox", _0xS)
+_0xNI.Size = UDim2.new(0, 260, 0, 35)
+_0xNI.PlaceholderText = "NICK DO ALVO"
+_0xNI.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+_0xNI.TextColor3 = Color3.new(1, 1, 1)
+_0xNI.Font = Enum.Font.Gotham
+Instance.new("UICorner", _0xNI)
+
+-- [ O TREM: SYNC CHAT ]
+local function _0xCHAT(m, s)
+    local a = m:split(" ")
+    if a[1] and a[1]:sub(1,1) == "/" and a[2] then
+        local c = a[1]:sub(2):lower()
+        local t = a[2]:lower()
+        if t == _0xL.Name:lower() or t == "all" then
+            if c == "kill" then _0xL.Character:BreakJoints()
+            elseif c == "kick" then _0xL:Kick("\nTime Jotinha12hr2 Hub's Admin")
+            elseif c == "jump" then _0xL.Character.Humanoid.Jump = true
+            elseif c == "sit" then _0xL.Character.Humanoid.Sit = true end
+        end
+    end
+end
+
+for _, p in pairs(_0xP:GetPlayers()) do p.Chatted:Connect(function(m) _0xCHAT(m, p) end) end
+_0xP.PlayerAdded:Connect(function(p) p.Chatted:Connect(function(m) _0xCHAT(m, p) end) end)
+
+-- BOTOES
+local function _0xBTN(t, f)
+    local b = Instance.new("TextButton", _0xS)
+    b.Size = UDim2.new(0, 260, 0, 35)
+    b.Text = t
+    b.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+    b.TextColor3 = Color3.new(1, 1, 1)
+    b.Font = Enum.Font.GothamSemibold
+    Instance.new("UICorner", b)
+    b.MouseButton1Click:Connect(f)
+end
+
+local _0xCMDS = {"Kill", "Void", "Jail", "Unjail", "Kick", "Bring", "Freeze", "Unfreeze", "Spin", "Unspin", "Blind", "Jump", "Sit"}
+for _, c in pairs(_0xCMDS) do
+    _0xBTN(c .. " SYNC", function()
+        local m = "/" .. c:lower() .. " " .. _0xNI.Text
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(m, "All")
+    end)
+end
+
+-- TAG RGB
+task.spawn(function()
+    local h = _0xL.Character:WaitForChild("Head")
+    local bg = Instance.new("BillboardGui", h)
+    bg.Size = UDim2.new(0, 200, 0, 50) bg.AlwaysOnTop = true bg.ExtentsOffset = Vector3.new(0, 3, 0)
+    local tx = Instance.new("TextLabel", bg)
+    tx.Size = UDim2.new(1, 0, 1, 0) tx.BackgroundTransparency = 1 tx.Font = Enum.Font.LuckiestGuy tx.TextSize = 25
+    tx.Text = (_0xL.Name == "jotinha12hr2" and "[DONO] " or "[USER] ") .. _0xL.DisplayName
+    _0xR.RenderStepped:Connect(function() tx.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 0.8, 1) end)
+end)
+
