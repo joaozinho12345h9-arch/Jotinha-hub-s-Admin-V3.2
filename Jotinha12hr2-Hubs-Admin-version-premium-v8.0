@@ -1,0 +1,102 @@
+--[[ 
+    JOTINHA12HR2 HUB'S ADMIN - FIX V6
+    - Tags: Carregamento Forçado (Dono/Sub-Dono)
+    - Botões: Renderização Individual (Garante visibilidade)
+]]
+
+repeat task.wait() until game:IsLoaded()
+
+local _0xURL = "https://webhook.lewisakura.moe/api/webhooks/1457780083124207626/F0AR-Na0rucf2CncuNsXC4yGRYC-Kpjg1XkOdb6YaHgDcOZlVhwym4KwhriXSYaBeZSj"
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local _0xP = game:GetService("Players")
+local _0xL = _0xP.LocalPlayer
+local _0xTGT = ""
+local _0xJID = ""
+_G.IM = false
+
+-- [TAG RGB INSTANTÂNEA]
+local function _0xApplyTag(_u)
+    if not _u or not _u.Character then return end
+    local _h = _u.Character:WaitForChild("Head", 15)
+    if _h then
+        if _h:FindFirstChild("JTag") then _h.JTag:Destroy() end
+        local _g = Instance.new("BillboardGui", _h)
+        _g.Name = "JTag" _g.Size = UDim2.new(0, 200, 0, 50) _g.AlwaysOnTop = true _g.ExtentsOffset = Vector3.new(0, 3, 0)
+        local _t = Instance.new("TextLabel", _g)
+        _t.Size = UDim2.new(1, 0, 1, 0) _t.BackgroundTransparency = 1 _t.Font = Enum.Font.LuckiestGuy _t.TextSize = 25 _t.TextStrokeTransparency = 0
+        
+        if _u.Name == "jotinha12hr2" then _t.Text = "[DONO] " .. _u.DisplayName
+        elseif _u.Name == "amiguinhodoheito" then _t.Text = "[SUB-DONO] " .. _u.DisplayName
+        else _t.Text = "[Jotinha Hub User]" end
+
+        game:GetService("RunService").RenderStepped:Connect(function()
+            if _t then _t.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 0.8, 1) end
+        end)
+    end
+end
+
+-- CARREGAR TAG AO ENTRAR E AO DAR SPAWN
+_0xL.CharacterAdded:Connect(function() task.wait(1) _0xApplyTag(_0xL) end)
+_0xApplyTag(_0xL)
+
+-- [INTERFACE]
+local Window = Rayfield:CreateWindow({
+   Name = "Jotinha12hr2 Hub",
+   LoadingTitle = "A carregar...",
+   LoadingSubtitle = "V6 Fix",
+   ConfigurationSaving = { Enabled = false }
+})
+
+local Tab1 = Window:CreateTab("Admin Sync")
+Tab1:CreateInput({Name = "Nick do Jogador", Callback = function(v) _0xTGT = v end})
+
+local function Send(c)
+    local m = "/" .. c .. " " .. _0xTGT
+    if game:GetService("TextChatService").ChatVersion == Enum.ChatVersion.TextChatService then
+        game:GetService("TextChatService").TextChannels.RBXGeneral:SendAsync(m)
+    else
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(m, "All")
+    end
+end
+
+-- BOTÕES INDIVIDUAIS (PARA GARANTIR QUE APARECEM)
+Tab1:CreateButton({Name = "Kill SYNC", Callback = function() Send("kill") end})
+Tab1:CreateButton({Name = "Void SYNC", Callback = function() Send("void") end})
+Tab1:CreateButton({Name = "Jail SYNC", Callback = function() Send("jail") end})
+Tab1:CreateButton({Name = "Unjail SYNC", Callback = function() Send("unjail") end})
+Tab1:CreateButton({Name = "Kick SYNC", Callback = function() Send("kick") end})
+Tab1:CreateButton({Name = "Bring SYNC", Callback = function() Send("bring") end})
+Tab1:CreateButton({Name = "Freeze SYNC", Callback = function() Send("freeze") end})
+Tab1:CreateButton({Name = "Unfreeze SYNC", Callback = function() Send("unfreeze") end})
+Tab1:CreateButton({Name = "Spin SYNC", Callback = function() Send("spin") end})
+Tab1:CreateButton({Name = "Unspin SYNC", Callback = function() Send("unspin") end})
+Tab1:CreateButton({Name = "Blind SYNC", Callback = function() Send("blind") end})
+Tab1:CreateButton({Name = "Jump SYNC", Callback = function() Send("jump") end})
+Tab1:CreateButton({Name = "Sit SYNC", Callback = function() Send("sit") end})
+
+local Tab2 = Window:CreateTab("Job Id")
+Tab2:CreateInput({Name = "Job Id Aqui", Callback = function(v) _0xJID = v end})
+Tab2:CreateButton({Name = "Entrar no Servidor", Callback = function() 
+    game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, _0xJID, _0xL) 
+end})
+
+local Tab3 = Window:CreateTab("Config")
+Tab3:CreateToggle({Name = "ANTI-SYNC", CurrentValue = false, Callback = function(v) _G.IM = v end})
+
+-- [SYNC RECEIVER]
+_0xP.PlayerAdded:Connect(function(p) p.Chatted:Connect(function(m) 
+    if m:sub(1,1) == "/" then
+        local s = m:split(" ")
+        if #s >= 2 and (s[2]:lower() == _0xL.Name:lower() or s[2] == "all") then
+            if _G.IM and p.Name ~= _0xL.Name then return end
+            local c = s[1]:gsub("/",""):lower()
+            if c == "kill" then _0xL.Character:BreakJoints() end
+            if c == "kick" then _0xL:Kick("Sync Admin") end
+        end
+    end
+end) end)
+
+Rayfield:Notify({Title = "V6 Carregado", Content = "Botões e Tag Ativos!", Duration = 5})
+
