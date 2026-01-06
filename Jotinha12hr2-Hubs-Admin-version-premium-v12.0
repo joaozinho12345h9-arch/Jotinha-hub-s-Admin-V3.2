@@ -1,21 +1,13 @@
 --[[ 
-    JOTINHA12HR2 HUB'S ADMIN - V11 OBFUSCATED
+    JOTINHA12HR2 HUB'S ADMIN - V12 OBFUSCATED + TOGGLE BUTTON
     - Interface: Direct & Stable
     - Sync: Active (O Trem)
-    - Status: Protected / 15 Buttons
+    - Feature: Open/Close Button
 ]]
 
 local _0x536572 = game:GetService("\80\108\97\121\101\114\115")
 local _0x4C50 = _0x536572.LocalPlayer
 local _0x4153 = false
-
-local function _0x474554(_0x73)
-    local _0x6F = ""
-    for _0x69 = 1, #_0x73 do
-        _0x6F = _0x6F .. string.char(_0x73[_0x69])
-    end
-    return _0x6F
-end
 
 -- [O TREM: LEITOR DE CHAT PROTEGIDO]
 local function _0x53594E43(_0x6D, _0x73)
@@ -40,7 +32,7 @@ _0x536572.PlayerAdded:Connect(function(_0x70)
     _0x70.Chatted:Connect(function(_0x6D) _0x53594E43(_0x6D, _0x70) end)
 end)
 
--- [INTERFACE OBF]
+-- [INTERFACE BASE]
 if game:GetService("\67\111\114\101\71\117\105"):FindFirstChild("\74\111\116\105\110\104\97\65\100\109\105\110") then
     game:GetService("\67\111\114\101\71\117\105").JotinhaAdmin:Destroy()
 end
@@ -48,12 +40,28 @@ end
 local _0x5347 = Instance.new("\83\99\114\101\101\110\71\117\105", game:GetService("\67\111\114\101\71\117\105"))
 _0x5347.Name = "\74\111\116\105\110\104\97\65\100\109\105\110"
 
+-- [BOTÃO DE ABRIR/FECHAR]
+local _0x4F42 = Instance.new("\84\101\120\116\66\111\116\116\111\110", _0x5347)
+_0x4F42.Size = UDim2.new(0, 60, 0, 60)
+_0x4F42.Position = UDim2.new(0, 10, 0.5, -30)
+_0x4F42.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+_0x4F42.Text = "\74\72" -- "JH" de Jotinha Hub
+_0x4F42.TextColor3 = Color3.new(1, 1, 1)
+_0x4F42.TextSize = 20
+local _0x434F = Instance.new("\85\73\67\111\114\110\101\114", _0x4F42)
+_0x434F.CornerRadius = UDim.new(1, 0)
+
 local _0x4D = Instance.new("\70\114\97\109\101", _0x5347)
 _0x4D.Size = UDim2.new(0, 350, 0, 400)
 _0x4D.Position = UDim2.new(0.5, -175, 0.5, -200)
 _0x4D.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
 _0x4D.Active = true
 _0x4D.Draggable = true
+_0x4D.Visible = true
+
+_0x4F42.MouseButton1Click:Connect(function()
+    _0x4D.Visible = not _0x4D.Visible
+end)
 
 local _0x43 = Instance.new("\83\99\114\111\108\108\105\110\103\70\114\97\109\101", _0x4D)
 _0x43.Size = UDim2.new(1, 0, 1, -40)
@@ -74,7 +82,7 @@ _0x4A49.Size = UDim2.new(0, 300, 0, 30)
 _0x4A49.PlaceholderText = "\74\79\66\32\73\68\32\65\81\85\73"
 
 local function _0x42(_0x6E, _0x63)
-    local _0x62 = Instance.new("\84\101\120\116\66\117\116\116\111\110", _0x43)
+    local _0x62 = Instance.new("\84\101\120\116\66\111\116\116\111\110", _0x43)
     _0x62.Size = UDim2.new(0, 300, 0, 30)
     _0x62.Text = _0x6E
     _0x62.BackgroundColor3 = Color3.fromRGB(70, 70, 70)
@@ -82,7 +90,7 @@ local function _0x42(_0x6E, _0x63)
     _0x62.MouseButton1Click:Connect(_0x63)
 end
 
--- [BOTÕES OBFUSCADOS]
+-- [BOTÕES SYNC]
 local _0x4C53 = {"Kill", "Void", "Jail", "Unjail", "Kick", "Bring", "Freeze", "Unfreeze", "Spin", "Unspin", "Blind", "Jump", "Sit"}
 for _, _0x76 in pairs(_0x4C53) do
     _0x42(_0x76 .. " SYNC", function()
@@ -100,7 +108,7 @@ _0x42("\65\78\84\73\45\83\89\78\67\58\32\79\70\70", function(_0x73)
     _0x73.Text = "\65\78\84\73\45\83\89\78\67\58\32" .. (_0x4153 and "\79\78" or "\79\70\70")
 end)
 
--- [TAG RGB]
+-- [TAG RGB INSTANT]
 task.spawn(function()
     local _0x68 = _0x4C50.Character:WaitForChild("\72\101\97\100")
     local _0x67 = Instance.new("\66\105\108\108\98\111\97\114\100\71\117\105", _0x68)
